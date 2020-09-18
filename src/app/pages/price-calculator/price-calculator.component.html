@@ -4,13 +4,13 @@
             <div class="col-lg-8">
                 <div class="main-heading">
                     <b class="h2">{{'CALCULATOR' | translate}}</b>
-                    <button class="btn btn-outline-dark float-right" data-toggle="modal" data-target="#exampleModal">Add
+                    <button class="btn btn-outline-dark float-right" data-toggle="modal" data-target="#addItem">Add
                         New Product</button>
                 </div>
                 <hr>
                 <hr>
                 <div class="table-cart">
-                    <table class="text-center table-border">
+                    <table class="text-center table-bordered">
                         <thead>
                             <tr>
                                 <th>Product</th>
@@ -20,78 +20,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngFor="let item of productsList">
                                 <td>
-                                    <div class="d-flex text-center">
-                                        <div class="img-product">
-                                            <img src="https://www.91-img.com/pictures/laptops/asus/asus-x552cl-sx019d-core-i3-3rd-gen-4-gb-500-gb-dos-1-gb-61721-large-1.jpg"
-                                                alt="" class="mCS_img_loaded">
-                                        </div>
+                                    <div class="d-flex text-center h-100 align-items-center justify-content-around">
                                         <div class="name-product">
-                                            Apple iPad Mini
-                                            <br>G2356
+                                            {{item.name | titlecase}}
                                         </div>
                                         <div class="price">
-                                            $1,250.00
+                                            ${{item.price}}
                                         </div>
                                     </div>
                                 </td>
                                 <td class="product-count">
-                                    <form action="#" class="count-inlineflex">
-                                        <div class="qtyminus">-</div>
-                                        <input type="text" name="quantity" value="1" class="qty">
-                                        <div class="qtyplus">+</div>
-                                    </form>
+                                    <div class="count-inlineflex">
+                                        <div class="qtyminus" (click)="item.quantity = item.quantity - 1">-</div>
+                                        <input type="text" [(ngModel)]="item.quantity" value="1" class="qty">
+                                        <div class="qtyplus" (click)="item.quantity = item.quantity + 1">+</div>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="total">
-                                        $6,250.00
+                                        ${{item.price * item.quantity}}
                                     </div>
                                 </td>
                                 <td>
-                                    <a href="#" title="">
-                                        <span class="fas fa-trash text-danger"></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="d-flex text-center">
-                                        <div class="img-product">
-                                            <img src="https://www.91-img.com/pictures/laptops/asus/asus-x552cl-sx019d-core-i3-3rd-gen-4-gb-500-gb-dos-1-gb-61721-large-1.jpg"
-                                                alt="" class="mCS_img_loaded">
-                                        </div>
-                                        <div class="name-product">
-                                            Apple iPad Mini
-                                            <br>G2356
-                                        </div>
-                                        <div class="price">
-                                            $1,250.00
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="product-count">
-                                    <form action="#" class="count-inlineflex">
-                                        <div class="qtyminus">-</div>
-                                        <input type="text" name="quantity" value="1" class="qty">
-                                        <div class="qtyplus">+</div>
-                                    </form>
-                                </td>
-                                <td>
-                                    <div class="total">
-                                        $6,250.00
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="#" title="">
-                                        <span class="fas fa-trash text-danger"></span>
-                                    </a>
+                                    <button class="fas fa-pencil text-dark btn btn-light"></button>
+                                    <button class="fas fa-trash text-danger btn btn-light"></button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="coupon-box">
-                        <form action="#" method="get" accept-charset="utf-8">
+                        <form accept-charset="utf-8">
                             <div class="coupon-input">
                                 <input type="text" name="coupon code" placeholder="Coupon Code">
                                 <button type="submit" class="round-black-btn">Apply Coupon</button>
@@ -104,7 +64,7 @@
             <!-- /.col-lg-8 -->
             <div class="col-lg-4">
                 <div class="cart-totals">
-                    <h3>Cart Totals</h3>
+                    <h3>Payment Totals</h3>
                     <form action="#" method="get" accept-charset="utf-8">
                         <table>
                             <tbody>
@@ -114,7 +74,7 @@
                                 </tr>
                                 <tr>
                                     <td>Shipping</td>
-                                    <td class="free-shipping">Free Shipping</td>
+                                    <td class="free-shipping">$205.00</td>
                                 </tr>
                                 <tr class="total-row">
                                     <td>Total</td>
@@ -123,7 +83,6 @@
                             </tbody>
                         </table>
                         <div class="btn-cart-totals">
-                            <a href="#" class="update round-black-btn" title="">Update Cart</a>
                             <a href="#" class="checkout round-black-btn" title="">Login To Checkout</a>
                         </div>
                         <!-- /.btn-cart-totals -->
@@ -139,82 +98,100 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addItem" tabindex="-1" aria-labelledby="addItemLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Product Form</h5>
+                <h5 class="modal-title" id="addItemLabel">Product Form</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form>
+            <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                <div class="modal-body">
                     <div class="form-row">
-                        <div class="col-md-4 mb-3">
-                            <label for="validationServer013">First name</label>
-                            <input type="text" class="form-control is-valid" id="validationServer013"
-                                placeholder="First name" value="Mark" required>
-                            <div class="valid-feedback">
+                        <!-- name -->
+                        <div class="col-md-5 mb-3">
+                            <label for="name">Product Name</label>
+                            <input type="text" class="form-control is-valid" id="name" placeholder="Product Name"
+                                formControlName="name"
+                                [ngClass]="{'is-invalid': product.name.errors, 'is-valid': !product.name.errors}">
+                            <div class="valid-feedback" *ngIf="!product.name.errors">
                                 Looks good!
                             </div>
+                            <div class="invalid-feedback" *ngIf="product.name.errors">
+                                Wrong product name!
+                            </div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="validationServer023">Last name</label>
-                            <input type="text" class="form-control is-valid" id="validationServer023"
-                                placeholder="Last name" value="Otto" required>
-                            <div class="valid-feedback">
+                        <!-- url -->
+                        <div class="col-md-7 mb-3">
+                            <label for="url">Product Url</label>
+                            <input type="text" class="form-control" id="url" placeholder="Product Url"
+                                formControlName="itemUrl"
+                                [ngClass]="{'is-invalid': product.itemUrl.errors, 'is-valid': !product.itemUrl.errors}">
+                            <div class="valid-feedback" *ngIf="!product.itemUrl.errors">
                                 Looks good!
                             </div>
+                            <div class="invalid-feedback" *ngIf="product.itemUrl.errors">
+                                Wrong product url!
+                            </div>
                         </div>
-                        
+
                     </div>
                     <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                            <label for="validationServer033">City</label>
-                            <input type="text" class="form-control is-invalid" id="validationServer033"
-                                placeholder="City" required>
-                            <div class="invalid-feedback">
-                                Please provide a valid city.
-                            </div>
-                        </div>
+                        <!-- price -->
                         <div class="col-md-3 mb-3">
-                            <label for="validationServer043">State</label>
-                            <input type="text" class="form-control is-invalid" id="validationServer043"
-                                placeholder="State" required>
-                            <div class="invalid-feedback">
-                                Please provide a valid state.
+                            <label for="price">Price</label>
+                            <input type="text" class="form-control" placeholder="Price" id="price"
+                                formControlName="price"
+                                [ngClass]="{'is-invalid': product.price.errors, 'is-valid': !product.price.errors}">
+                            <div class="valid-feedback" *ngIf="!product.price.errors">
+                                Right Price!
+                            </div>
+                            <div class="invalid-feedback" *ngIf="product.price.errors">
+                                Wrong Price!
                             </div>
                         </div>
+                        <!-- weight -->
                         <div class="col-md-3 mb-3">
-                            <label for="validationServer053">Zip</label>
-                            <input type="text" class="form-control is-invalid" id="validationServer053"
-                                placeholder="Zip" required>
-                            <div class="invalid-feedback">
-                                Please provide a valid zip.
+                            <label for="weight">Weight (Kg)</label>
+                            <input type="text" class="form-control is-invalid" id="weight" placeholder="Weight (Kg)"
+                                formControlName="weight"
+                                [ngClass]="{'is-invalid': product.weight.errors, 'is-valid': !product.weight.errors}">
+                            <div class="valid-feedback" *ngIf="!product.weight.errors">
+                                Right weight!
+                            </div>
+                            <div class="invalid-feedback" *ngIf="product.weight.errors">
+                                Wrong weight!
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input is-invalid" id="invalidCheck33" required>
-                            <label class="custom-control-label" for="invalidCheck33">Agree to terms and
-                                conditions</label>
-                            <div class="invalid-feedback">
-                                You must agree before submitting.
+                        <!-- category -->
+                        <div class="col-md-3 mb-3">
+                            <label for="category">Category</label>
+                            <input type="text" class="form-control is-invalid" id="category" placeholder="Category"
+                                formControlName="category"
+                                [ngClass]="{'is-invalid': product.category.errors, 'is-valid': !product.category.errors}">
+                            <div class="valid-feedback" *ngIf="!product.category.errors">
+                                Right category!
+                            </div>
+                            <div class="invalid-feedback" *ngIf="product.category.errors">
+                                Wrong category!
                             </div>
                         </div>
-                        <div class="invalid-feedback">
-                            You must agree before submitting.
+                        <!-- color -->
+                        <div class="col-md-3 mb-3">
+                            <label for="color">Color</label>
+                            <input type="text" class="form-control" id="color" placeholder="Color"
+                                formControlName="color">
                         </div>
+
                     </div>
-                    <button class="btn btn-primary" type="submit">Submit form</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary">Reset Form</button>
+                    <button type="submit" class="btn btn-primary">Save Data</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

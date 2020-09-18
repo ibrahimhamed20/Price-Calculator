@@ -14,7 +14,7 @@
 
                 tr {
                     th {
-                        padding    : 8px 0 18px;
+                        padding    : 10px 0;
                         color      : #484848;
                         font-size  : 15px;
                         font-weight: 400;
@@ -48,6 +48,8 @@
             tbody {
                 tr {
                     td {
+                        padding: 10px 0;
+
                         .img-product {
                             width       : 72px;
                             float       : left;
@@ -58,23 +60,6 @@
                             img {
                                 width: 100%;
                             }
-                        }
-
-                        .name-product {
-                            font-size  : 15px;
-                            color      : #484848;
-                            padding-top: 8px;
-                            line-height: 24px;
-                            width      : 50%;
-                        }
-
-                        .price {
-                            text-align  : right;
-                            line-height : 64px;
-                            margin-right: 40px;
-                            color       : #989898;
-                            font-size   : 16px;
-                            font-family : 'Nunito';
                         }
 
                         .quanlity {
@@ -134,14 +119,17 @@
             border       : 2px dotted #e5e5e5;
             border-radius: 10px;
             margin-top   : 55px;
+
+            input {
+                height: 44px !important;
+            }
         }
 
         form {
             input {
                 display      : inline-block;
                 width        : 264px;
-                margin-right : 13px;
-                height       : 44px;
+                height       : 33px;
                 border-radius: 25px;
                 border       : solid 2px #cccccc;
                 padding      : 5px 15px;
