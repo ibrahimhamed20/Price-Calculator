@@ -4,3 +4,8 @@ h3,
 p {
     text-align: right;
 }
+
+.navbar-brand {
+    margin-left : 1rem;
+    margin-right: unset !important;
+}
