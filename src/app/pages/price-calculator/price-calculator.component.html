@@ -2,7 +2,13 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <div class="main-heading">Shopping Cart</div>
+                <div class="main-heading">
+                    <b class="h2">{{'CALCULATOR' | translate}}</b>
+                    <button class="btn btn-outline-dark float-right" data-toggle="modal" data-target="#exampleModal">Add
+                        New Product</button>
+                </div>
+                <hr>
+                <hr>
                 <div class="table-cart">
                     <table class="text-center table-border">
                         <thead>
@@ -127,6 +133,88 @@
                 <!-- /.cart-totals -->
             </div>
             <!-- /.col-lg-4 -->
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Product Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="validationServer013">First name</label>
+                            <input type="text" class="form-control is-valid" id="validationServer013"
+                                placeholder="First name" value="Mark" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationServer023">Last name</label>
+                            <input type="text" class="form-control is-valid" id="validationServer023"
+                                placeholder="Last name" value="Otto" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationServer033">City</label>
+                            <input type="text" class="form-control is-invalid" id="validationServer033"
+                                placeholder="City" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid city.
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="validationServer043">State</label>
+                            <input type="text" class="form-control is-invalid" id="validationServer043"
+                                placeholder="State" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid state.
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="validationServer053">Zip</label>
+                            <input type="text" class="form-control is-invalid" id="validationServer053"
+                                placeholder="Zip" required>
+                            <div class="invalid-feedback">
+                                Please provide a valid zip.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input is-invalid" id="invalidCheck33" required>
+                            <label class="custom-control-label" for="invalidCheck33">Agree to terms and
+                                conditions</label>
+                            <div class="invalid-feedback">
+                                You must agree before submitting.
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">
+                            You must agree before submitting.
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Submit form</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
         </div>
     </div>
 </div>
