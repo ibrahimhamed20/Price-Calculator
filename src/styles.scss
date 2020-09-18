@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+
+*,
+body {
+    font-family: 'Tajawal', sans-serif;
+}
+
+nav.navbar {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
