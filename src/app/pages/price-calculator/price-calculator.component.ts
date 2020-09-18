@@ -45,6 +45,7 @@ export class PriceCalculatorComponent implements OnInit {
     });
 
     document.getElementById('addItem').click();
+    this.productForm.reset();
   }
 
 }
