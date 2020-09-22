@@ -25,3 +25,21 @@ export function loadStyles(stylePath: string, id: string, lang?: 'en' | 'ar') {
         head.appendChild(style);
     }
 }
+
+
+/**
+ * check Object properies change to update
+ * @param oldObj 
+ * @param newObj 
+ */
+export function checkObjectForUpdate(oldObj: any, newObj: any): any {
+    let returnObj = {};
+    let old_propNames = Object.getOwnPropertyNames(oldObj);
+    for (let i = 0; i < old_propNames.length; i++) {
+        const old_propName = old_propNames[i];
+        if (oldObj[old_propName] && newObj[old_propName] != oldObj[old_propName]) {
+            returnObj[old_propName] = newObj[old_propName];
+        }
+    }
+    return returnObj;
+}

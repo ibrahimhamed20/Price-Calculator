@@ -4,7 +4,8 @@
             <div class="col-lg-8">
                 <div class="main-heading">
                     <b class="h2">{{'CALCULATOR' | translate}}</b>
-                    <button class="btn btn-outline-dark float-right" data-toggle="modal" data-target="#addItem">Add
+                    <button id="openModal" class="btn btn-outline-dark float-right" data-toggle="modal"
+                        data-target="#addItem">Add
                         New Product</button>
                 </div>
                 <hr>
@@ -15,6 +16,7 @@
                             <tr>
                                 <th>Product</th>
                                 <th>Quantity</th>
+                                <th>Discount</th>
                                 <th>Total</th>
                                 <th>Actions</th>
                             </tr>
@@ -33,19 +35,27 @@
                                 </td>
                                 <td class="product-count">
                                     <div class="count-inlineflex">
-                                        <div class="qtyminus" (click)="item.quantity = item.quantity - 1">-</div>
+                                        <div class="qtyminus" (click)="changeQuantity(item, 'MINUS')">-</div>
                                         <input type="text" [(ngModel)]="item.quantity" value="1" class="qty">
-                                        <div class="qtyplus" (click)="item.quantity = item.quantity + 1">+</div>
+                                        <div class="qtyplus" (click)="changeQuantity(item, 'PLUS')">+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="discount">
+                                        <input type="number" (change)="applyDiscount(item)" [(ngModel)]="item.discount">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="total">
-                                        ${{item.price * item.quantity}}
+                                        ${{item.totalPrice}}
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="fas fa-pencil text-dark btn btn-light"></button>
-                                    <button class="fas fa-trash text-danger btn btn-light"></button>
+                                    <button class="fa fa-pencil text-dark btn btn-light"
+                                        (click)="editProduct(item)"></button>
+                                    <button class="fa fa-trash text-danger btn btn-light"
+                                        (click)="deleteProduct(item)"></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -69,16 +79,32 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <td>Subtotal</td>
-                                    <td class="subtotal">$2,589.00</td>
+                                    <td>Company Fees</td>
+                                    <td class="subtotal">${{companyFees}}</td>
                                 </tr>
                                 <tr>
-                                    <td>Shipping</td>
-                                    <td class="free-shipping">$205.00</td>
+                                    <td>Shipping Fees</td>
+                                    <td class="free-shipping">${{shippingFees}}</td>
                                 </tr>
+
+                                <tr>
+                                    <td>Custom Fees</td>
+                                    <td class="free-shipping">${{customFees}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Total Discounts</td>
+                                    <td class="free-shipping">${{totalDiscount}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Total After Discount</td>
+                                    <td class="free-shipping">${{totalPriceAfterDiscount}}</td>
+                                </tr>
+
                                 <tr class="total-row">
-                                    <td>Total</td>
-                                    <td class="price-total">$1,591.00</td>
+                                    <td>Total Items Price</td>
+                                    <td class="price-total">${{totalPrice}}</td>
                                 </tr>
                             </tbody>
                         </table>
