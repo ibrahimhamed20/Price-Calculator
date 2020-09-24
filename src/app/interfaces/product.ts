@@ -11,5 +11,7 @@ export interface IProduct {
     /////////////////
     totalPrice?: number;
     discount?: number;
-    totalAfterDiscount;
+    totalAfterDiscount?: number;
+
+    sum: number;
 }

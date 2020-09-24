@@ -43,3 +43,16 @@ export function checkObjectForUpdate(oldObj: any, newObj: any): any {
     }
     return returnObj;
 }
+
+/**
+ * calculate total based on key you provide as param
+ * @param key like totalPrice
+ */
+export function calculateSumByKey<T>(arr: T[], key: string): number {
+    let count = 0;
+    for (let i = 0; i < arr.length; i++) {
+        const element = arr[i];
+        count += element[key]
+    }
+    return count;
+}

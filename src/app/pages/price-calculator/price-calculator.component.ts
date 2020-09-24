@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { calculateSumByKey } from '@app/helpers/_functions';
 import { IProduct } from '@app/interfaces/product';
 
 @Component({
@@ -18,6 +19,7 @@ export class PriceCalculatorComponent implements OnInit {
   totalDiscount: number = 0;
   customFees: number = 0;
   totalPriceAfterDiscount: number = 0;
+  finalPrice: number = 0;
 
   constructor(private _fb: FormBuilder) { }
 
@@ -50,17 +52,21 @@ export class PriceCalculatorComponent implements OnInit {
       let indx = this.productsList.findIndex(el => el.id == productData.id);
       this.productsList[indx] = {
         ...productData,
-        totalPrice: this.productsList[indx].quantity * productData.price,
+        price: +productData.price,
+        totalPrice: this.productsList[indx].quantity * +productData.price,
         quantity: this.productsList[indx].quantity,
-        discount: this.productsList[indx].discount
+        discount: this.productsList[indx].discount,
+        totalAfterDiscount: this.productsList[indx].discount > 0 ? this.productsList[indx].totalAfterDiscount : this.productsList[indx].quantity * +productData.price
       }
     } else {
       this.productsList.push({
         ...productData,
+        price: +productData.price,
         id: this.productsList.length + 1,
         quantity: 1,
         totalPrice: productData.price * 1,
-        discount: 0
+        discount: 0,
+        totalAfterDiscount: +productData.price
       });
     }
 
@@ -73,26 +79,13 @@ export class PriceCalculatorComponent implements OnInit {
   }
 
   feesCalculation() {
+    this.totalPrice = calculateSumByKey<IProduct>(this.productsList, 'totalPrice');
+    this.totalDiscount = calculateSumByKey<IProduct>(this.productsList, 'discount');
+    this.totalPriceAfterDiscount = this.totalDiscount > 0 ? calculateSumByKey<IProduct>(this.productsList, 'totalAfterDiscount') : this.totalPrice;
     this.companyFees = this.calculateCompnayFees();
     this.shippingFees = this.calculateShippingFees();
-    this.totalPrice = this.calculateTotalItemsPrice();
-    this.totalDiscount = this.calculateTotalDiscount();
-    this.totalPriceAfterDiscount = this.calculateTotalPriceAfterDiscount()
-  }
 
-  calculateTotalPriceAfterDiscount(): number {
-    let result  = this.productsList.reduce((el, curr) => { return { totalAfterDiscount: el.totalAfterDiscount + curr.totalAfterDiscount } }, { totalAfterDiscount: 0 }).totalAfterDiscount;
-    return result;
-  }
-
-  calculateTotalDiscount(): number {
-    let result = this.productsList.reduce((el, curr) => { return { discount: el.discount + curr.discount } }, { discount: 0 }).discount;
-    return +result.toFixed(2);
-  }
-
-  calculateTotalItemsPrice(): number {
-    let result = this.productsList.reduce((el, curr) => { return { totalPrice: el.totalPrice + curr.totalPrice } }, { totalPrice: 0 }).totalPrice;
-    return +result.toFixed(2);
+    this.finalPrice = this.companyFees + this.shippingFees + (this.totalDiscount > 0 ? this.totalPriceAfterDiscount : this.totalPrice);
   }
 
   calculateShippingFees(): number {
@@ -111,7 +104,8 @@ export class PriceCalculatorComponent implements OnInit {
   }
 
   calculateCompnayFees(): number {
-    let result = this.productsList.reduce((el, curr) => { return { totalPrice: el.totalPrice + curr.totalPrice } }, { totalPrice: 0 }).totalPrice * (8 / 100);
+    let total = this.totalDiscount > 0 ? calculateSumByKey<IProduct>(this.productsList, 'totalAfterDiscount') : calculateSumByKey<IProduct>(this.productsList, 'totalPrice');
+    let result = total * (8 / 100);
     return +result.toFixed(2);
   }
 
@@ -129,9 +123,29 @@ export class PriceCalculatorComponent implements OnInit {
     this.feesCalculation();
   }
 
-  applyDiscount(item: IProduct) {
+  applyDiscount(item: IProduct, type: 'PLUS' | 'MINUS') {
+    if (item.discount >= 0) {
+      if (type == 'PLUS') {
+        item.discount += 1;
+      } else {
+        item.discount -= 1;
+      }
+    } else {
+      item.discount = 0;
+    }
     item.totalAfterDiscount = item.totalPrice - item.discount;
     this.feesCalculation();
+  }
+
+  applyCoupon(coupon: string) {
+    if (coupon) {
+      if (coupon.startsWith('SHP')) {
+        this.shippingFees = this.shippingFees * (90 / 100);
+        this.feesCalculation();
+      } else if (coupon.startsWith('CS')) {
+        this.finalPrice = this.finalPrice * (80 / 100);
+      }
+    }
   }
 
   editProduct(item: IProduct) {

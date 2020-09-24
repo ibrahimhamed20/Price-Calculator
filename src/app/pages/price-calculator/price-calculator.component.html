@@ -41,9 +41,12 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>
-                                    <div class="discount">
-                                        <input type="number" (change)="applyDiscount(item)" [(ngModel)]="item.discount">
+                                <td class="product-count">
+                                    <div class="count-inlineflex">
+                                        <div class="qtyminus" (click)="applyDiscount(item, 'MINUS')">-</div>
+                                        <input type="text" [(ngModel)]="item.discount" value="0" class="qty">
+                                        <div class="qtyplus" (click)="applyDiscount(item, 'PLUS')">+
+                                        </div>
                                     </div>
                                 </td>
                                 <td>
@@ -88,13 +91,13 @@
                                 </tr>
 
                                 <tr>
-                                    <td>Custom Fees</td>
-                                    <td class="free-shipping">${{customFees}}</td>
+                                    <td>Total Discounts</td>
+                                    <td class="free-shipping">${{totalDiscount}}</td>
                                 </tr>
 
                                 <tr>
-                                    <td>Total Discounts</td>
-                                    <td class="free-shipping">${{totalDiscount}}</td>
+                                    <td>Total Items Price</td>
+                                    <td class="free-shipping">${{totalPrice}}</td>
                                 </tr>
 
                                 <tr>
@@ -103,8 +106,13 @@
                                 </tr>
 
                                 <tr class="total-row">
-                                    <td>Total Items Price</td>
-                                    <td class="price-total">${{totalPrice}}</td>
+                                    <td>Final Total Price</td>
+                                    <td class="price-total">${{finalPrice}}</td>
+                                </tr>
+
+                                <tr class="total-row">
+                                    <td>Final Price After Coupon</td>
+                                    <td class="price-total">${{finalPrice}}</td>
                                 </tr>
                             </tbody>
                         </table>
